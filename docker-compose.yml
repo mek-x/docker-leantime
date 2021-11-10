@@ -2,27 +2,27 @@ version: '3.3'
 
 services:
    db:
-     image: mysql:5.7
-     container_name: mysql_leantime
+     image: mariadb:10.4
+     container_name: db_leantime
      volumes:
        - db_data:/var/lib/mysql
      restart: always
      environment:
-         MYSQL_ROOT_PASSWORD: '321.qwerty'
-         MYSQL_DATABASE: 'leantime'
-         MYSQL_USER: 'admin'
-         MYSQL_PASSWORD: '321.qwerty'
+         MARIADB_ROOT_PASSWORD: '321.qwerty'
+         MARIADB_DATABASE: 'leantime'
+         MARIADB_USER: 'admin'
+         MARIADB_PASSWORD: '321.qwerty'
      command: --character-set-server=utf8 --collation-server=utf8_unicode_ci
    web:
-     image: leantime/leantime:latest
+     image: mekx/leantime:latest
      container_name: leantime
      environment:
-         LEAN_DB_HOST: 'mysql_leantime'
+         LEAN_DB_HOST: 'db_leantime'
          LEAN_DB_USER: 'admin'
          LEAN_DB_PASSWORD: '321.qwerty'
          LEAN_DB_DATABASE: 'leantime'
      ports:
-       - "80:80"
+       - "8080:80"
      depends_on:
        - db
 volumes:
